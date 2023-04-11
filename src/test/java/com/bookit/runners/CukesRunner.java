@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
                 "json:target/cucumber.json"}, // cucumber report
         features = "src/test/resources/features",
         glue = "com/bookit/step_definitions",
-        dryRun = true,
-        tags = "@wip"
+        dryRun = false,
+        tags = "@student"
 )
 public class CukesRunner {
 }

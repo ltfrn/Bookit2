@@ -17,7 +17,7 @@ public class BookitUtils {
                 .queryParam("email", email)
                 .and()
                 .queryParam("password", password)
-                .when().get(ConfigurationReader.getProperty("base_url") + "/sign");
+                .when().get(Environment.BASE_URL + "/sign");
 
         String token = "Bearer " + response.path("accessToken");
 
@@ -32,7 +32,8 @@ public class BookitUtils {
 
         String token = given()
                 .queryParams(returnCredentials(role))
-                .when().get(ConfigurationReader.getProperty("base_url") + "/sign").prettyPeek().path("accessToken");
+                .when().get(Environment.BASE_URL + "/sign")
+                .path("accessToken");
 
         return "Bearer " + token;
 
@@ -44,22 +45,20 @@ public class BookitUtils {
 
         switch (role) {
             case "teacher":
-                email = ConfigurationReader.getProperty("teacher_email") ;
-                password = ConfigurationReader.getProperty("teacher_password") ;
+                email = Environment.TEACHER_EMAIL;
+                password = Environment.TEACHER_PASSWORD;
                 break;
 
             case "team-member":
-                email = ConfigurationReader.getProperty("team_member_email") ;
-                password = ConfigurationReader.getProperty("team_member_password");
+                email = Environment.MEMBER_EMAIL;
+                password = Environment.MEMBER_PASSWORD;
                 break;
             case "team-leader":
-                email = ConfigurationReader.getProperty("team_leader_email") ;
-                password = ConfigurationReader.getProperty("team_leader_password") ;
+                email = Environment.LEADER_EMAIL;
+                password = Environment.LEADER_PASSWORD;
                 break;
-
             default:
-
-                throw new RuntimeException("Invalid Role Entry :\n>> " + role + " <<");
+                throw new RuntimeException("Invalid Role Entry : >> " + role + " <<");
         }
         Map<String, String> credentials = new HashMap<>();
         credentials.put("email", email);
